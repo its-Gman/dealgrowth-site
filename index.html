@@ -36,7 +36,7 @@
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            cursor: none;
+            cursor: auto;
         }
 
         ::selection { background: var(--gold-dim); color: var(--text); }
@@ -50,27 +50,7 @@
         }
         @media (max-width: 768px) { .viewport-frame { margin: 12px; --frame: 12px; } }
 
-        /* ========== CUSTOM CURSOR ========== */
-        .cursor {
-            position: fixed; top: 0; left: 0; z-index: 10000;
-            width: 8px; height: 8px; background: var(--gold);
-            border-radius: 50%; pointer-events: none; mix-blend-mode: difference;
-            transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
-            will-change: transform;
-        }
-        .cursor.hover {
-            width: 48px; height: 48px; background: transparent;
-            border: 1px solid var(--gold); border-radius: 50%;
-            mix-blend-mode: normal;
-        }
-        .cursor-label {
-            position: fixed; top: 0; left: 0; z-index: 10001;
-            font-family: var(--font-body); font-size: 9px; font-weight: 600;
-            letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold);
-            pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
-            transform: translate(-50%, -50%);
-        }
-        @media (pointer: coarse) { .cursor, .cursor-label { display: none !important; } body { cursor: auto; } }
+
 
         /* ========== NAVIGATION ========== */
         nav {
@@ -81,8 +61,9 @@
         @media (max-width: 768px) { nav { padding: 1.25rem 1.5rem; } }
 
         .logo { display: flex; align-items: center; text-decoration: none; pointer-events: auto; }
-        .logo img { width: 130px; height: auto; object-fit: contain; opacity: 0.9; transition: opacity 0.3s; }
+        .logo img { width: 130px; height: auto; object-fit: contain; opacity: 0.9; transition: opacity 0.3s; display: block; }
         .logo:hover img { opacity: 1; }
+        @media (max-width: 768px) { .logo img { width: 110px; } }
 
         .nav-links { display: flex; align-items: center; gap: 3rem; list-style: none; }
         .nav-links a {
@@ -157,7 +138,7 @@
             display: inline-flex; align-items: center; gap: 0.75rem;
             font-family: var(--font-body); font-size: 0.8rem; font-weight: 600;
             letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
-            transition: all 0.5s var(--transition); cursor: none; position: relative;
+            transition: all 0.5s var(--transition); position: relative;
             overflow: hidden;
         }
         .btn-gold {
@@ -184,11 +165,7 @@
             border: 1px solid var(--border-strong); background: var(--surface);
             padding: 12px; border-radius: 2px;
         }
-        .video-stage::before {
-            content: 'Showreel 01'; position: absolute; top: -28px; left: 0;
-            font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
-            color: var(--text-muted);
-        }
+
 
         .video-inner {
             position: relative; width: 100%; overflow: hidden;
@@ -285,7 +262,7 @@
             gap: 3rem; align-items: center;
             padding: 3.5rem 0; border-bottom: 1px solid var(--border);
             transition: all 0.5s var(--transition); position: relative;
-            cursor: none;
+
         }
         .service-row::before {
             content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0;
@@ -408,7 +385,7 @@
         .faq-list { border-top: 1px solid var(--border); }
         .faq-item {
             border-bottom: 1px solid var(--border); padding: 2.5rem 0;
-            cursor: none; transition: padding 0.4s var(--transition);
+ transition: padding 0.4s var(--transition);
         }
         .faq-item:hover { padding-left: 1rem; }
         .faq-q {
@@ -526,24 +503,20 @@
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-label" id="cursorLabel"></div>
-
     <!-- Viewport Frame -->
     <div class="viewport-frame"></div>
 
     <!-- Navigation -->
     <nav>
-        <a href="#" class="logo" data-cursor="hover">
+        <a href="#" class="logo">
             <img src="assets/Deal%20Growth%20AI.png" alt="DealGrowth">
         </a>
         <ul class="nav-links">
-            <li><a href="#services" data-cursor="hover">Services</a></li>
-            <li><a href="#process" data-cursor="hover">Process</a></li>
-            <li><a href="#cases" data-cursor="hover">Results</a></li>
-            <li><a href="#faq" data-cursor="hover">FAQ</a></li>
-            <li><a href="#contact" class="nav-cta" data-cursor="hover">Book a Call</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#cases">Results</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact" class="nav-cta">Book a Call</a></li>
         </ul>
     </nav>
 
@@ -556,12 +529,12 @@
                 We architect AI-driven sales infrastructure that operates independently — prospecting, qualifying, and nurturing leads while your team focuses on what humans do best: closing.
             </p>
             <div class="hero-actions reveal reveal-d3">
-                <a href="#contact" class="btn btn-gold" data-cursor="hover">Book a Strategy Call</a>
-                <a href="#services" class="btn btn-line" data-cursor="hover">Explore Services</a>
+                <a href="#contact" class="btn btn-gold">Book a Strategy Call</a>
+                <a href="#services" class="btn btn-line">Explore Services</a>
             </div>
         </div>
         <div class="hero-right">
-            <div class="video-stage scale-reveal" data-cursor="hover" data-label="Watch">
+            <div class="video-stage scale-reveal">
                 <div class="video-inner">
                     <video autoplay muted loop playsinline poster="assets/poster.png">
                         <source src="assets/bg-video.mp4" type="video/mp4">
@@ -622,7 +595,7 @@
         </div>
         <div class="container">
             <div class="services-list">
-                <div class="service-row reveal" data-cursor="hover">
+                <div class="service-row reveal">
                     <div class="service-num">01</div>
                     <div>
                         <div class="service-title">Workflow Automation</div>
@@ -630,7 +603,7 @@
                     </div>
                     <div class="service-arrow">&rarr;</div>
                 </div>
-                <div class="service-row reveal reveal-d1" data-cursor="hover">
+                <div class="service-row reveal reveal-d1">
                     <div class="service-num">02</div>
                     <div>
                         <div class="service-title">Outbound Acceleration</div>
@@ -638,7 +611,7 @@
                     </div>
                     <div class="service-arrow">&rarr;</div>
                 </div>
-                <div class="service-row reveal reveal-d2" data-cursor="hover">
+                <div class="service-row reveal reveal-d2">
                     <div class="service-num">03</div>
                     <div>
                         <div class="service-title">Custom Growth Systems</div>
@@ -660,22 +633,22 @@
             </div>
         </div>
         <div class="process-grid">
-            <div class="process-step reveal" data-cursor="hover">
+            <div class="process-step reveal">
                 <div class="process-num">01</div>
                 <h3>Sales Audit</h3>
                 <p>We map your current pipeline, identify every leak, and pinpoint exactly where automation will drive the highest return.</p>
             </div>
-            <div class="process-step reveal reveal-d1" data-cursor="hover">
+            <div class="process-step reveal reveal-d1">
                 <div class="process-num">02</div>
                 <h3>System Build</h3>
                 <p>Custom AI workflows designed around your ICP, competitive landscape, and existing sales motion. Nothing off-the-shelf.</p>
             </div>
-            <div class="process-step reveal reveal-d2" data-cursor="hover">
+            <div class="process-step reveal reveal-d2">
                 <div class="process-num">03</div>
                 <h3>Integration</h3>
                 <p>Seamless connection to HubSpot, Salesforce, Slack, and your entire tech stack. Zero disruption to daily operations.</p>
             </div>
-            <div class="process-step reveal reveal-d3" data-cursor="hover">
+            <div class="process-step reveal reveal-d3">
                 <div class="process-num">04</div>
                 <h3>Performance Scaling</h3>
                 <p>Continuous A/B testing, signal analysis, and optimization. We scale what wins and kill what doesn't — fast.</p>
@@ -693,7 +666,7 @@
             </div>
         </div>
         <div class="cases-grid">
-            <div class="case-card reveal" data-cursor="hover">
+            <div class="case-card reveal">
                 <div class="case-meta">
                     <div class="case-logo">AV</div>
                     <div class="case-industry">Venture Capital</div>
@@ -706,7 +679,7 @@
                     <div><div class="case-metric-v">8 wks</div><div class="case-metric-l">To Close</div></div>
                 </div>
             </div>
-            <div class="case-card reveal reveal-d1" data-cursor="hover">
+            <div class="case-card reveal reveal-d1">
                 <div class="case-meta">
                     <div class="case-logo">NX</div>
                     <div class="case-industry">HealthTech</div>
@@ -719,7 +692,7 @@
                     <div><div class="case-metric-v">63%</div><div class="case-metric-l">Cost Cut</div></div>
                 </div>
             </div>
-            <div class="case-card reveal reveal-d2" data-cursor="hover">
+            <div class="case-card reveal reveal-d2">
                 <div class="case-meta">
                     <div class="case-logo">BN</div>
                     <div class="case-industry">Manufacturing</div>
@@ -732,7 +705,7 @@
                     <div><div class="case-metric-v">4&times;</div><div class="case-metric-l">Pipeline Volume</div></div>
                 </div>
             </div>
-            <div class="case-card reveal reveal-d3" data-cursor="hover">
+            <div class="case-card reveal reveal-d3">
                 <div class="case-meta">
                     <div class="case-logo">SF</div>
                     <div class="case-industry">Political Campaign</div>
@@ -759,19 +732,19 @@
         </div>
         <div class="container">
             <div class="faq-list">
-                <div class="faq-item reveal" data-faq data-cursor="hover">
+                <div class="faq-item reveal" data-faq>
                     <div class="faq-q">How quickly will we see results?<span class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
                     <div class="faq-a"><p>Most clients see measurable pipeline movement within 2&ndash;4 weeks. Significant revenue impact typically lands at the 60&ndash;90 day mark, once the AI has learned your market signals.</p></div>
                 </div>
-                <div class="faq-item reveal reveal-d1" data-faq data-cursor="hover">
+                <div class="faq-item reveal reveal-d1" data-faq>
                     <div class="faq-q">Will this work with our existing stack?<span class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
                     <div class="faq-a"><p>Yes. We integrate with HubSpot, Salesforce, Pipedrive, Slack, LinkedIn, Gmail, and dozens more. We build around your tools — never force a migration.</p></div>
                 </div>
-                <div class="faq-item reveal reveal-d2" data-faq data-cursor="hover">
+                <div class="faq-item reveal reveal-d2" data-faq>
                     <div class="faq-q">How is this different from an SDR team?<span class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
                     <div class="faq-a"><p>AI operates 24/7, personalizes at infinite scale, never burns out, and learns from every interaction. It costs a fraction of a human team and improves faster than any training program.</p></div>
                 </div>
-                <div class="faq-item reveal reveal-d3" data-faq data-cursor="hover">
+                <div class="faq-item reveal reveal-d3" data-faq>
                     <div class="faq-q">What does the investment look like?<span class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
                     <div class="faq-a"><p>Engagements scale from single-workflow builds to full GTM architecture. We scope precisely during the strategy call and only propose what will deliver a clear ROI. No long-term contracts required.</p></div>
                 </div>
@@ -786,7 +759,7 @@
             <div class="cta-eyebrow reveal">Begin the Conversation</div>
             <h2 class="reveal reveal-d1">Ready to Build<br><em>Your Engine?</em></h2>
             <p class="reveal reveal-d2">A 30-minute strategy call. No pitch deck. We'll assess where you are, where you're leaking revenue, and whether we're the right fit.</p>
-            <a href="https://calendly.com/dealgrowth" class="cta-btn reveal reveal-d3" target="_blank" data-cursor="hover">
+            <a href="https://calendly.com/dealgrowth" class="cta-btn reveal reveal-d3" target="_blank">
                 Schedule Your Call <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
         </div>
@@ -797,7 +770,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <a href="#" class="logo" data-cursor="hover">
+                    <a href="#" class="logo">
                         <img src="assets/Deal%20Growth%20AI.png" alt="DealGrowth" style="width: 130px;">
                     </a>
                     <p>Autonomous sales infrastructure for companies that refuse to scale through headcount alone.</p>
@@ -805,26 +778,26 @@
                 <div class="footer-col">
                     <h4>Services</h4>
                     <ul>
-                        <li><a href="#services" data-cursor="hover">Workflow Automation</a></li>
-                        <li><a href="#services" data-cursor="hover">Outbound Acceleration</a></li>
-                        <li><a href="#services" data-cursor="hover">Custom Growth Systems</a></li>
+                        <li><a href="#services">Workflow Automation</a></li>
+                        <li><a href="#services">Outbound Acceleration</a></li>
+                        <li><a href="#services">Custom Growth Systems</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="#process" data-cursor="hover">Process</a></li>
-                        <li><a href="#cases" data-cursor="hover">Results</a></li>
-                        <li><a href="#faq" data-cursor="hover">FAQ</a></li>
-                        <li><a href="#contact" data-cursor="hover">Contact</a></li>
+                        <li><a href="#process">Process</a></li>
+                        <li><a href="#cases">Results</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Connect</h4>
                     <ul>
-                        <li><a href="#" data-cursor="hover">LinkedIn</a></li>
-                        <li><a href="#" data-cursor="hover">Twitter / X</a></li>
-                        <li><a href="mailto:hello@dealgrowth.ai" data-cursor="hover">hello@dealgrowth.ai</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter / X</a></li>
+                        <li><a href="mailto:hello@dealgrowth.ai">hello@dealgrowth.ai</a></li>
                     </ul>
                 </div>
             </div>
@@ -836,37 +809,6 @@
     </footer>
 
     <script>
-        // ========== CUSTOM CURSOR ==========
-        const cursor = document.getElementById('cursor');
-        const cursorLabel = document.getElementById('cursorLabel');
-        let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
-
-        if (window.matchMedia('(pointer: fine)').matches) {
-            document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; }, { passive: true });
-            function animateCursor() {
-                curX += (mouseX - curX) * 0.15;
-                curY += (mouseY - curY) * 0.15;
-                cursor.style.transform = `translate(${curX - 4}px, ${curY - 4}px)`;
-                cursorLabel.style.transform = `translate(${curX}px, ${curY - 28}px)`;
-                requestAnimationFrame(animateCursor);
-            }
-            animateCursor();
-
-            document.querySelectorAll('[data-cursor="hover"]').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.classList.add('hover');
-                    if (el.dataset.label) {
-                        cursorLabel.textContent = el.dataset.label;
-                        cursorLabel.style.opacity = '1';
-                    }
-                });
-                el.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hover');
-                    cursorLabel.style.opacity = '0';
-                });
-            });
-        }
-
         // ========== SCROLL REVEAL ==========
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
