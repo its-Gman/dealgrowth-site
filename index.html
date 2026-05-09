@@ -86,7 +86,42 @@
         .nav-cta::after { display: none !important; }
         .nav-cta:hover { background: var(--gold-dim); border-color: rgba(201,169,110,0.3); }
 
-        @media (max-width: 768px) { .nav-links { display: none; } }
+        /* Hamburger */
+        .hamburger {
+            display: none; flex-direction: column; justify-content: center; gap: 5px;
+            width: 32px; height: 32px; background: none; border: none; cursor: pointer; padding: 0; z-index: 101;
+        }
+        .hamburger span {
+            display: block; width: 24px; height: 1.5px; background: var(--text);
+            transition: all 0.3s var(--transition); transform-origin: center;
+        }
+        .hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        .mobile-menu {
+            position: fixed; inset: 0; z-index: 99;
+            background: var(--bg);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s var(--transition);
+        }
+        .mobile-menu.active { opacity: 1; pointer-events: auto; }
+        .mobile-menu a {
+            color: var(--text-secondary); text-decoration: none; font-size: 1.1rem;
+            font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .mobile-menu a:hover { color: var(--gold); }
+        .mobile-menu .nav-cta-mobile {
+            color: var(--gold); border: 1px solid var(--gold-dim);
+            padding: 0.8rem 2rem; margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+        }
 
         /* ========== HERO ========== */
         .hero {
@@ -180,17 +215,6 @@
             background: rgba(0,0,0,0.15); transition: background 0.5s var(--transition);
             pointer-events: none;
         }
-        .video-stage:hover .play-overlay { background: rgba(0,0,0,0.05); }
-
-        .play-ring {
-            width: 72px; height: 72px; border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            transition: all 0.4s var(--transition); backdrop-filter: blur(4px);
-        }
-        .play-ring svg { width: 20px; height: 20px; color: white; margin-left: 3px; }
-        .video-stage:hover .play-ring { border-color: var(--gold); transform: scale(1.08); }
-        .video-stage:hover .play-ring svg { color: var(--gold); }
-
         /* ========== MARQUEE STATS ========== */
         .marquee-section {
             border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
@@ -381,6 +405,43 @@
             .case-card { padding: 3rem 2rem; }
         }
 
+        /* ========== ABOUT US ========== */
+        .about-section { padding: 10rem 0; }
+        .about-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
+        }
+        .founder-card {
+            position: relative; overflow: hidden;
+            border: 1px solid var(--border); background: var(--bg-elevated);
+            transition: border-color 0.5s var(--transition);
+        }
+        .founder-card:hover { border-color: var(--border-strong); }
+        .founder-card img {
+            width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+            filter: grayscale(30%);
+            transition: filter 0.6s var(--transition), transform 0.6s var(--transition);
+        }
+        .founder-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.03);
+        }
+        .founder-info { padding: 2rem 2.5rem; }
+        .founder-name {
+            font-family: var(--font-display); font-size: 1.6rem; font-weight: 400;
+            color: var(--text); margin-bottom: 0.25rem;
+        }
+        .founder-role {
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+            text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+        }
+        .founder-bio {
+            font-size: 0.9rem; line-height: 1.75; color: var(--text-secondary);
+        }
+        @media (max-width: 768px) {
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .founder-info { padding: 1.5rem; }
+        }
+
         /* ========== FAQ ========== */
         .faq-list { border-top: 1px solid var(--border); }
         .faq-item {
@@ -515,10 +576,22 @@
             <li><a href="#services">Services</a></li>
             <li><a href="#process">Process</a></li>
             <li><a href="#cases">Results</a></li>
+            <li><a href="#about">About</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#contact" class="nav-cta">Book a Call</a></li>
         </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#cases">Results</a>
+        <a href="#about">About</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact" class="nav-cta-mobile">Book a Call</a>
+    </div>
 
     <!-- Hero -->
     <section class="hero" id="showcase">
@@ -539,11 +612,6 @@
                     <video autoplay muted loop playsinline poster="assets/poster.png">
                         <source src="assets/bg-video.mp4" type="video/mp4">
                     </video>
-                    <div class="play-overlay">
-                        <div class="play-ring">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -721,6 +789,37 @@
         </div>
     </section>
 
+    <!-- About Us -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="section-header full reveal">
+                <div class="section-eyebrow">The Team</div>
+                <h2 class="section-title">Who We <em>Are</em></h2>
+                <p class="section-sub">Two founders, one mission: building autonomous revenue systems that actually work.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="about-grid">
+                <div class="founder-card reveal">
+                    <img src="assets/Garrett%20Aman%20-%20Founder.png" alt="Garrett Aman">
+                    <div class="founder-info">
+                        <div class="founder-name">Garrett Aman</div>
+                        <div class="founder-role">Founder</div>
+                        <p class="founder-bio">Leading strategy and client delivery. Obsessed with turning complex sales workflows into lean, autonomous engines.</p>
+                    </div>
+                </div>
+                <div class="founder-card reveal reveal-d1">
+                    <img src="assets/Ethan%20Aman%20-%20Co%20Founder.png" alt="Ethan Aman">
+                    <div class="founder-info">
+                        <div class="founder-name">Ethan Aman</div>
+                        <div class="founder-role">Co-Founder</div>
+                        <p class="founder-bio">Driving systems architecture and AI integration. Builds the infrastructure that scales without adding headcount.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- FAQ -->
     <section id="faq">
         <div class="container">
@@ -788,6 +887,7 @@
                     <ul>
                         <li><a href="#process">Process</a></li>
                         <li><a href="#cases">Results</a></li>
+                        <li><a href="#about">About</a></li>
                         <li><a href="#faq">FAQ</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
@@ -809,6 +909,24 @@
     </footer>
 
     <script>
+        // ========== HAMBURGER MENU ==========
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (hamburger && mobileMenu) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            });
+            mobileMenu.querySelectorAll('a').forEach(a => {
+                a.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+
         // ========== SCROLL REVEAL ==========
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
